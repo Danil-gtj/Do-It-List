@@ -76,13 +76,13 @@ class _UltraSimpleCalendarState extends State<UltraSimpleCalendar> {
                   decoration: BoxDecoration(
                     color: i == DateTime.now().day && month.month == DateTime.now().month && month.year == DateTime.now().year
                         ? MainColors.buttonBackgroundColor_alpha.withAlpha(150)
-                        : MainColors.buttonBackgroundColor_beta.withAlpha(80),
+                        : ([weekDays[5], weekDays[6]]).contains(weekDays[DateTime(month.year, month.month, i).weekday - 1]) ? Colors.pinkAccent.withAlpha(80) : MainColors.buttonBackgroundColor_alpha.withAlpha(80),
                     shape: BoxShape.rectangle,
                   ),
                   child: Column(
                       children: [Container(
                           decoration: BoxDecoration(
-                              color: MainColors.buttonBackgroundColor_alpha,
+                              color: ([weekDays[5], weekDays[6]]).contains(weekDays[DateTime(month.year, month.month, i).weekday - 1]) ? Colors.pinkAccent.withAlpha(80) : MainColors.buttonBackgroundColor_alpha,
                               shape: BoxShape.rectangle,
                           ),
                           child: Row(
@@ -98,13 +98,10 @@ class _UltraSimpleCalendarState extends State<UltraSimpleCalendar> {
                                     )
                                 ),
                                 Padding(padding: EdgeInsets.only(left: 40)),
-                                Container(
-                                    child: Text("${weekDays[DateTime(month.year, month.month, i).weekday - 1]}", style: TextStyle(
+                                Text("${weekDays[DateTime(month.year, month.month, i).weekday - 1]}", style: TextStyle(
                                       color: MainColors.textColor,
-                                      fontSize: 18,
-                                      backgroundColor:([weekDays[5], weekDays[6]]).contains(weekDays[DateTime(month.year, month.month, i).weekday - 1]) ? Colors.red : null,)
+                                      fontSize: 18)
                                   )
-                                )
                                ]
                           )
                       ),
@@ -114,14 +111,15 @@ class _UltraSimpleCalendarState extends State<UltraSimpleCalendar> {
                         children: [
                             Container(
                               decoration: BoxDecoration(
-                                color: MainColors.buttonBackgroundColor_alpha,
+                                color: ([weekDays[5], weekDays[6]]).contains(weekDays[DateTime(month.year, month.month, i).weekday - 1]) ? Colors.pinkAccent.withAlpha(60) : null,
                                 border: Border.all(
                                   width: 1,
                                   color: MainColors.buttonBackgroundColor_beta
                                 ),
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              width: 80,
+                              width: 130,
+                              padding: EdgeInsets.only(top: 15),
                               child: Column(
                                 children: [
                                   for (int i = 1; i <= 4; i++)
