@@ -1,16 +1,17 @@
-# doit_list
+# DO IT LIST | ADVENCED TASK MANAGER
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+>[!IMPORTANT]
+> ## Main Tasks
+> - I'am development a advanced task manager, which have: 
+>   - Simple and intuitive interface, with the ability to customize it flexibly, without losing the functionality of the application.
+>   - Optimization that allows you to quickly access the app, make edits, and add tasks.
+>   - A new system for tracking tasks and their completion.
+>   - Notifications that will help you achieve your goals in education, work, and business.
+>   - You can connect your Google and GitHub accounts to log in using them.
+>
+> ## All about...
+>  Some about task manager.
+___
+> [!NOTE]
+> ## Progress
+> - I’m currently working on cinnect Data base, which save notes and another information.
