@@ -9,7 +9,7 @@ class SignInPage extends StatelessWidget {
     return Scaffold (
       backgroundColor: MainColors.backgroundColor,
       appBar: AppBar(
-        title: Text("ACCOUNT GOOGLE", style: TextStyle(fontSize: 36, color: MainColors.titleTextColor)),
+        title: Text("ACCOUNT LOGIN", style: TextStyle(fontSize: 36, color: MainColors.titleTextColor)),
         centerTitle: true,
         backgroundColor: MainColors.appBarColor_alpha,
       ),
@@ -18,7 +18,7 @@ class SignInPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("LOG IN", style: TextStyle(
+            Text("SIGN IN", style: TextStyle(
                 color: MainColors.titleTextColor,
                 fontSize: 48
                 ),
@@ -76,16 +76,25 @@ class SignInPage extends StatelessWidget {
 
             SizedBox(
               height: 50,
-              width: 250,
+              width: 300,
+              child: ElevatedButton(onPressed: () {
+
+              },  style: ElevatedButton.styleFrom(
+                backgroundColor: null,
+              ), child: Text("New User? Click Here", style: TextStyle(fontSize: 24, color: Colors.lightBlue),)),
+            ),
+
+            Padding(padding: EdgeInsets.all(10)),
+            SizedBox(
+              height: 50,
+              width: 300,
               child: ElevatedButton(onPressed: () {
 
               },  style: ElevatedButton.styleFrom(
                 backgroundColor: MainColors.buttonBackgroundColor_alpha,
-              ), child: Text("REGISTRATION", style: TextStyle(fontSize: 24, color: MainColors.titleTextColor),)),
+              ), child: Text("SIGN IN WITH GOOGLE", style: TextStyle(fontSize: 24, color: MainColors.titleTextColor),)),
             ),
 
-            Padding(padding: EdgeInsets.all(10)),
-            
             SizedBox(
               height: 50,
               width: 200,
