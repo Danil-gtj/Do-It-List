@@ -14,4 +14,4 @@
 ___
 > [!NOTE]
 > ## Progress
-> - I’m currently working on cinnect Data base, which save notes and another information.
+> - I’m currently working on connect Data base, which save notes and another information.
