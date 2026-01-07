@@ -1,5 +1,8 @@
 import 'package:doit_list/StyleClasses/main_style.dart';
+import 'package:doit_list/pages/testpage.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -88,8 +91,11 @@ class SignInPage extends StatelessWidget {
             SizedBox(
               height: 50,
               width: 300,
-              child: ElevatedButton(onPressed: () {
-
+              child: ElevatedButton(onPressed: () async {
+                  bool isLogged = await login();
+                  if(isLogged){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UltraSimpleCalendar()));
+                  }
               },  style: ElevatedButton.styleFrom(
                 backgroundColor: MainColors.buttonBackgroundColor_alpha,
               ), child: Text("SIGN IN WITH GOOGLE", style: TextStyle(fontSize: 24, color: MainColors.titleTextColor),)),
@@ -110,4 +116,32 @@ class SignInPage extends StatelessWidget {
       ),
     );
   }
+
+  Future<bool> login() async {
+    /*try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+
+      final GoogleSignInAccount? googleUser = await googleSignIn.SignIn();
+
+      if (googleUser == null) {
+        return false;
+      }
+
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      return FirebaseAuth.instance.currentUser != null;
+    } catch (e) {
+      print('Login error: $e');
+      return false;
+    }*/
+    return false;
+  }
+
 }
