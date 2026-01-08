@@ -118,10 +118,10 @@ class SignInPage extends StatelessWidget {
   }
 
   Future<bool> login() async {
-    /*try {
+    try {
       final GoogleSignIn googleSignIn = GoogleSignIn();
 
-      final GoogleSignInAccount? googleUser = await googleSignIn.SignIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
       if (googleUser == null) {
         return false;
@@ -140,8 +140,7 @@ class SignInPage extends StatelessWidget {
     } catch (e) {
       print('Login error: $e');
       return false;
-    }*/
-    return false;
+    }
   }
 
 }

@@ -86,11 +86,9 @@ class HomeState extends State<Home> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-
           if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Center(child: Text('ERROR: ${snapshot.error}'));
           }
-
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return Center(child: Text("NO NOTES", style: TextStyle(color: MainColors.textColor),));
           }
