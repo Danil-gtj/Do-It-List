@@ -1,10 +1,10 @@
 import "package:doit_list/StyleClasses/main_style.dart";
-import "package:doit_list/pages/testpage.dart";
+import "package:doit_list/pages/methodics/calendar_page.dart";
 import "package:flutter/material.dart";
-import "package:doit_list/pages/home.dart";
+import "package:doit_list/pages/methodics/note_page.dart";
 import "package:doit_list/pages/main_screen.dart";
 import 'package:firebase_core/firebase_core.dart';
-import 'package:doit_list/pages/sign_in_page.dart';
+import 'package:doit_list/pages/Auth/sign_in_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

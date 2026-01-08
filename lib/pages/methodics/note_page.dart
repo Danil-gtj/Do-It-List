@@ -1,4 +1,5 @@
 import 'package:doit_list/StyleClasses/main_style.dart';
+import 'package:doit_list/models/note_model.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -10,13 +11,19 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-  String _userToDo = "";
   bool _isFirebaseInitialized = false;
+
+  var titleController = TextEditingController();
+  var descController = TextEditingController();
+
+  List<Note> notes = [];
 
   @override
   void initState() {
     super.initState();
     _isFirebaseInitialized = true;
+
+    getNotes();
   }
 
   void _menuOpen() {
@@ -81,7 +88,7 @@ class HomeState extends State<Home> {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('items').snapshots(),
+        stream: FirebaseFirestore.instance.collection('notes').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -111,28 +118,25 @@ class HomeState extends State<Home> {
                 onDismissed: (direction) async {
                   try {
                     await FirebaseFirestore.instance
-                        .collection('items')
+                        .collection('notes')
                         .doc(document.id)
                         .delete();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Element was deleted')),
-                    );
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Delete Error: $e')),
+                      SnackBar(content: Text('Error: $e')),
                     );
-                    setState(() {});
                   }
                 },
                 child: Card(
                   color: MainColors.buttonBackgroundColor_alpha,
                   child: ListTile(
-                    title: Text(data['item'] ?? '', style: TextStyle(color: MainColors.textColor, fontSize: 18),),
+                    title: Text(data['title'],  style: TextStyle(color: MainColors.titleTextColor, fontSize: 24)),
+                    subtitle: Text(data['desc'] ?? '', style: TextStyle(color: MainColors.textColor, fontSize: 18)),
                     trailing: IconButton(
                       onPressed: () async {
                         try {
                           await FirebaseFirestore.instance
-                              .collection('items')
+                              .collection('notes')
                               .doc(document.id)
                               .delete();
                         } catch (e) {
@@ -157,14 +161,13 @@ class HomeState extends State<Home> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text("ADD ELEMENT", style: TextStyle(color: MainColors.textColor),),
+                title: Text("ADD NOTES", style: TextStyle(color: MainColors.textColor),),
                 backgroundColor: MainColors.buttonBackgroundColor_beta,
-                content: TextField(
-                  onChanged: (String value) {
-                    _userToDo = value;
-                  },
+                content: Column( children: [
+                TextField(
+                  controller: titleController,
                   decoration: InputDecoration(
-                    hintText: 'ENTER TASK',
+                    labelText: "Enter Title",
                     filled: true,
                     fillColor: MainColors.inputFieldFillColor,
                     enabledBorder: InputBorder.none,
@@ -175,18 +178,32 @@ class HomeState extends State<Home> {
                   ),
                   cursorColor: MainColors.inputFieldCursorColor,
                 ),
+                TextField(
+                  controller: descController,
+                  decoration: InputDecoration(
+                    labelText: "Enter Descritption",
+                    filled: true,
+                    fillColor: MainColors.inputFieldFillColor,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
+                  cursorColor: MainColors.inputFieldCursorColor,
+                ),
+                ]),
                 actions: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: MainColors.buttonBackgroundColor_alpha,
                     ),
-                    onPressed: () {
-                      if (_userToDo.trim().isNotEmpty) {
-                        FirebaseFirestore.instance
-                            .collection("items")
-                            .add({"item": _userToDo});
-                        Navigator.of(context).pop();
-                      }
+                    onPressed: () async {
+                      String title = titleController.text.trim();
+                      String desc = descController.text.trim();
+                      
+                      await addNote(Note(title, desc), context);
+                      Navigator.pop(context);
                     },
                     child: Text("ADD", style: TextStyle(color: MainColors.textColor),),
                   ),
@@ -198,5 +215,35 @@ class HomeState extends State<Home> {
         child: Icon(Icons.add, color: MainColors.buttonBackgroundColor_beta),
       ),
     );
+  }
+
+  addNote(Note note, BuildContext context) async {
+
+    FirebaseFirestore db = FirebaseFirestore.instance;
+
+    await db.collection("notes").doc(DateTime.now().toString()).set(
+      Note.toMap(note)
+    ).then((value)=> {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Added successfully")))
+    });
+
+    setState(() {
+
+    });
+  }
+
+  getNotes() async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection("notes").get();
+
+    for(DocumentSnapshot doc in snapshot.docs){
+      var noteData = doc.data() as Map<String, dynamic>;
+
+      notes.add(Note.fromMap(noteData));
+
+    }
+
+    setState(() {
+
+    });
   }
 }
